@@ -26,10 +26,6 @@ public class ScriptTest extends BaseTest {
         emailContentPage = new EmailContentPage(driver);
         emailTabPage = new EmailTabPage(driver);
 
-        PageFactory.initElements(driver, loginPage);
-        PageFactory.initElements(driver, emailTabPage);
-        PageFactory.initElements(driver, emailContentPage);
-        PageFactory.initElements(driver, emailTabPage);
     }
 
     @Test

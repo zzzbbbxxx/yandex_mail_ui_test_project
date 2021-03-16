@@ -18,8 +18,6 @@ public class LoginTest extends BaseTest {
     public void initPages() {
         loginPage = new LoginPage(driver);
         emailTabPage = new EmailTabPage(driver);
-        PageFactory.initElements(driver, loginPage);
-        PageFactory.initElements(driver, emailTabPage);
     }
 
     @Test

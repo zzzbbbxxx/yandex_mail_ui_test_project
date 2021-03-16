@@ -16,6 +16,8 @@ public class EmailTest extends BaseTest {
     private EmailListPage emailListPage;
     private EmailContentPage emailContentPage;
 
+
+
     @BeforeMethod
     public void initPages() {
 
@@ -23,14 +25,10 @@ public class EmailTest extends BaseTest {
         emailListPage = new EmailListPage(driver);
         emailContentPage = new EmailContentPage(driver);
 
-        PageFactory.initElements(driver, loginPage);
-        PageFactory.initElements(driver, emailListPage);
-        PageFactory.initElements(driver, emailContentPage);
-
     }
 
     @Test
-    public void subjectTest()  {
+    public void subjectTest() {
         String emailSubject = "Кандидатская работа (черновик)";
 
         loginPage.openMailPage(mailOwner.LOGIN,mailOwner.PASSWORD);
