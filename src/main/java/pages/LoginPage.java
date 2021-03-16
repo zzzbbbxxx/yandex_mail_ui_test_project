@@ -8,32 +8,43 @@ import pages.base.BasePage;
 
 public class LoginPage extends BasePage {
 
+    @FindBy(xpath = "//*[contains(@class,'HeadBanner-Button-Enter')]")
+    public WebElement creatAccountButton;
+
+    @FindBy(xpath = "//*[contains(@class,'HeadBanner-Button-Enter')]")
+    public WebElement enterToAccountButton;
+
+    @FindBy(xpath = "//*[contains(@id,'passp-field-login')]")
+    public WebElement fieldLogin;
+
+    @FindBy(xpath = "//*[contains(@id,'passp-field-passwd')]")
+    public WebElement fieldPassword;
+
+    @FindBy(xpath = "//button[@type='submit']")
+    public WebElement submitButton;
+
+    @FindBy(xpath = "//*[contains(@class,'mail-ComposeButton js-main-action-compose')]")
+    public WebElement startPageElement;
+
+    @FindBy(xpath = "(//*[contains(@class,'messages-scroll-area')]//*[contains(@class,'Item_subject')])[1]")
+    public WebElement lastIncomingEmail;
+
     public LoginPage(WebDriver driver) {
         super(driver);
     }
 
-
-    @FindBy(xpath = "//*[contains(@class,'HeadBanner-Button-Enter')]")
-    private WebElement creatAccountButton;
     public void clickOnCreateAccount() {
         clickOn(creatAccountButton);
     }
 
-    @FindBy(xpath = "//*[contains(@class,'HeadBanner-Button-Enter')]")
-    private WebElement enterToAccountButton;
     public void clickOnEnterToAccount() {
         clickOn(enterToAccountButton);
     }
 
-
-    @FindBy(xpath = "//*[contains(@id,'passp-field-login')]")
-    private WebElement fieldLogin;
     public void enterLoginV1(String login) {
         enterToField(fieldLogin,login);
     }
 
-    @FindBy(xpath = "//*[contains(@id,'passp-field-passwd')]")
-    private WebElement fieldPassword;
     public void enterPasswordV1(String password) {
         enterToField(fieldPassword, password);
     }
@@ -48,14 +59,12 @@ public class LoginPage extends BasePage {
         clickOnSubmitButton();
     }
 
-    @FindBy(xpath = "//button[@type='submit']")
-    private WebElement submitButton;
     public void clickOnSubmitButton(){
         clickOn(submitButton);
     }
 
     public boolean isStartPageOpen(){
-        return isElementPresent("//*[contains(@class,'mail-ComposeButton js-main-action-compose')]");
+        return isElementPresent(startPageElement);
     }
 
     public void openLoginPage(){
@@ -63,9 +72,8 @@ public class LoginPage extends BasePage {
     }
 
 
-    public void openFirstEmail(){
-        clickOn("(//*[contains(@class,'messages-scroll-area')]" +
-                "//*[contains(@class,'Item_subject')])[1]");
+    public void openLastIncomingEmail(){
+        clickOn(lastIncomingEmail);
 
     }
 

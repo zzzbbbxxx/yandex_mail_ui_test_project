@@ -1,6 +1,6 @@
 package users;
 
 public class mailOwner {
-    public static String LOGIN = "";
-    public static String PASSWORD = "";
+    public static String LOGIN = "metestirovshik";
+    public static String PASSWORD = "metestirovshik123";
 }

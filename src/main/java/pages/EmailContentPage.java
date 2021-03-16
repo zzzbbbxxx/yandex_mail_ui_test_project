@@ -2,6 +2,7 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import pages.base.BasePage;
 
 public class EmailContentPage extends BasePage {
@@ -11,28 +12,33 @@ public class EmailContentPage extends BasePage {
     }
 
     public boolean isSubjectCorrectV2(String subject) {
-        String xpath = String.format("//*[contains(@class,'mail-Message-Content')]" +
+
+        WebElement webElement = getWebElementFromFormattedXpathString(
+                "//*[contains(@class,'mail-Message-Content')]" +
                 "//*[contains(@class,'mail-Message-Toolbar-Subject_message') " +
                 "and text()= '%s']",subject);
 
-        return isElementPresent(xpath);
+        return isElementPresent(webElement);
     }
 
     public boolean isAuthorCorrect(String senderName, String senderEmail) {
-        String xpath = String.format("//*[contains(@class,'mail-Message-Sender')]" +
+
+        WebElement webElement = getWebElementFromFormattedXpathString(
+                "//*[contains(@class,'mail-Message-Sender')]" +
                 "//*[contains(@class,'message-head-sender-name') and @title='%s']//.." +
                 "//*[contains(@class,'mail-Message-Sender-Email') and @title='%s']",senderName,senderEmail);
 
-        return isElementPresent(xpath);
+        return isElementPresent(webElement);
     }
 
-    public boolean isTextCorrect(String text) {
+    public boolean isMessageTextCorrect(String text) {
 
-        String xpath = String.format("//*[contains(@class,'mail-Message-Content')]" +
+        WebElement webElement = getWebElementFromFormattedXpathString(
+                "//*[contains(@class,'mail-Message-Content')]" +
                 "//*[contains(@class,'Message-Body-Content')]" +
                 "//*[contains(text(),'%s')]",text);
 
-        return isElementPresent(xpath);
+        return isElementPresent(webElement);
     }
 
 

@@ -7,14 +7,16 @@ import org.openqa.selenium.WebElement;
 
 public class BasePage {
 
-
     protected WebDriver driver;
-
 
     public BasePage(WebDriver driver) {
         this.driver = driver;
     }
 
+    public WebElement getWebElementFromFormattedXpathString(String xpathString, Object... parameters) {
+        WebElement element = driver.findElement(By.xpath(String.format(xpathString, parameters)));
+        return element;
+    }
 
     public void clickOn(WebElement element) {
 
@@ -28,28 +30,19 @@ public class BasePage {
     }
 
     public void sendToField(WebElement element, String value) {
-    //    WebElement element = driver.findElement(By.xpath(locator));
         element.click();
         element.sendKeys(value);
     }
 
     public void enterToField(WebElement element, String value) {
-      //  WebElement element = driver.findElement(By.xpath(locator));
-        element.click();
-        element.sendKeys(value);
+        sendToField(element,value);
         element.submit();
     }
 
-    public boolean isElementPresent(String locator) {
+    public boolean isElementPresent(WebElement element) {
 
-        try {
-            WebElement element = driver.findElement(By.xpath(locator));
-            return true;
-        } catch (NoSuchElementException exception)
-        {
-            exception.printStackTrace();
-            return false;
-        }
+        return element.isDisplayed();
+
 
     }
 }

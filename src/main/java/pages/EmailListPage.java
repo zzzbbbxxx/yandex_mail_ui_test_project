@@ -2,9 +2,14 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import pages.base.BasePage;
 
 public class EmailListPage extends BasePage {
+
+    @FindBy(xpath = "(//*[contains(@class,'messages-scroll-area')]//*[contains(@class,'Item_subject')])[1]")
+    public WebElement lastIncomingEmail;
 
     public EmailListPage(WebDriver driver) {
         super(driver);
@@ -12,32 +17,34 @@ public class EmailListPage extends BasePage {
 
     public void findByAuthorEmail(String email) {
 
-        String xpath = String.format("(//*[contains(@class,'MessagesList')]" +
+        WebElement webElement = getWebElementFromFormattedXpathString(
+                "(//*[contains(@class,'MessagesList')]" +
                 "//*[contains(@class,'MessageSnippet-Item_sender')]//*[@title='%s'])[1]",email);
 
-        clickOn(xpath);
+        clickOn(webElement);
     }
 
     public void findByAuthorName(String name) {
 
-        String xpath = String.format("(//*[contains(@class,'MessagesList')]" +
+        WebElement webElement = getWebElementFromFormattedXpathString(
+                "(//*[contains(@class,'MessagesList')]" +
                 "//*[contains(@class,'MessageSnippet-Item_sender')]//*[contains(text(),'%s')])[1]",name);
 
-        clickOn(xpath);
+        clickOn(name);
     }
 
     public void findBySubject(String subject) {
 
-        String xpath = String.format("(//*[contains(@class,'MessagesList')]" +
+        WebElement webElement = getWebElementFromFormattedXpathString(
+                "(//*[contains(@class,'MessagesList')]" +
                 "//*[contains(@class,'Item_subject')]//*[@title='%s'])[1]",subject);
 
-        clickOn(xpath);
+        clickOn(subject);
     }
 
-    public void openFirstEmail(){
+    public void openLastEmail(){
 
-        clickOn("(//*[contains(@class,'messages-scroll-area')]" +
-                "//*[contains(@class,'Item_subject')])[1]");
+        clickOn(lastIncomingEmail);
 
     }
 
@@ -49,13 +56,13 @@ public class EmailListPage extends BasePage {
         if (sender.contains("@")) email = sender;
         else name = sender;
 
-        String xpath = String.format("//*[contains(@class,'mail-MessageSnippet-Content')]" +
+        WebElement webElement = getWebElementFromFormattedXpathString(
+                "//*[contains(@class,'mail-MessageSnippet-Content')]" +
                 "//*[contains(@class,'Item_sender')]" +
-                "//*[text()='%s' or @title='%s']" +
-                "//following:://*[contains(@class,'Item_subject')]" +
-                "//*[@title='%s']",name,email,subject);
+                "//*[text()='%s' or @title='%s']//following::*[contains(@class,'Item_subject')]//*[@title='%s']"
+                ,name,email,subject);
 
-        clickOn(xpath);
+        clickOn(webElement);
     }
 
 }

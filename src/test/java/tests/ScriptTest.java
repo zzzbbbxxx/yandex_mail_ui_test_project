@@ -1,5 +1,6 @@
 package tests;
 
+import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -24,17 +25,26 @@ public class ScriptTest extends BaseTest {
         emailListPage = new EmailListPage(driver);
         emailContentPage = new EmailContentPage(driver);
         emailTabPage = new EmailTabPage(driver);
+
+        PageFactory.initElements(driver, loginPage);
+        PageFactory.initElements(driver, emailTabPage);
+        PageFactory.initElements(driver, emailContentPage);
+        PageFactory.initElements(driver, emailTabPage);
     }
 
     @Test
     public void scenario() {
 
-        loginPage.openMailPage(mailOwner.LOGIN,mailOwner.PASSWORD);
-        emailListPage.findBySenderAndSubject("","");
+        String emailSubject = "Задание для кандидата (черновик)";
+        String emailSender = "m-v.m-d@yandex.ru";
 
-        Assert.assertTrue(emailContentPage.isTextCorrect(""));
-        Assert.assertTrue(emailContentPage.isAuthorCorrect("",""));
-        Assert.assertTrue(emailContentPage.isSubjectCorrectV2(""));
+
+        loginPage.openMailPage(mailOwner.LOGIN,mailOwner.PASSWORD);
+        emailListPage.findBySenderAndSubject(emailSender,emailSubject);
+
+        Assert.assertTrue(emailContentPage.isMessageTextCorrect("Черновая версия задания для кандидата"));
+        Assert.assertTrue(emailContentPage.isAuthorCorrect("Мустафаев Магомед","m-v.m-d@yandex.ru"));
+        Assert.assertTrue(emailContentPage.isSubjectCorrectV2("Задание для кандидата (черновик)"));
 
         emailTabPage.logOut();
 

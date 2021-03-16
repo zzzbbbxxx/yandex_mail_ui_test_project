@@ -1,5 +1,6 @@
 package tests;
 
+import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -17,7 +18,8 @@ public class LoginTest extends BaseTest {
     public void initPages() {
         loginPage = new LoginPage(driver);
         emailTabPage = new EmailTabPage(driver);
-
+        PageFactory.initElements(driver, loginPage);
+        PageFactory.initElements(driver, emailTabPage);
     }
 
     @Test

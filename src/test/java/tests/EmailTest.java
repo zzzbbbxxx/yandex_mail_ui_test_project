@@ -1,5 +1,6 @@
 package tests;
 
+import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -17,47 +18,43 @@ public class EmailTest extends BaseTest {
 
     @BeforeMethod
     public void initPages() {
+
         loginPage = new LoginPage(driver);
         emailListPage = new EmailListPage(driver);
         emailContentPage = new EmailContentPage(driver);
+
+        PageFactory.initElements(driver, loginPage);
+        PageFactory.initElements(driver, emailListPage);
+        PageFactory.initElements(driver, emailContentPage);
+
     }
 
     @Test
     public void subjectTest()  {
-        String emailSubject = "";
+        String emailSubject = "Кандидатская работа (черновик)";
 
         loginPage.openMailPage(mailOwner.LOGIN,mailOwner.PASSWORD);
-        emailListPage.openFirstEmail();
+        emailListPage.openLastEmail();
         Assert.assertTrue(emailContentPage.isSubjectCorrectV2(emailSubject));
     }
 
     @Test
     public void senderTest() {
-        String senderName = "";
-        String senderEmail = "";
+        String senderName = "Мустафаев Магомед";
+        String senderEmail = "m-v.m-d@yandex.ru";
 
         loginPage.openMailPage(mailOwner.LOGIN,mailOwner.PASSWORD);
-        emailListPage.openFirstEmail();
+        emailListPage.openLastEmail();
         Assert.assertTrue(emailContentPage.isAuthorCorrect(senderName, senderEmail));
     }
 
     @Test
     public void contentTest() {
-        String emailText = "";
+        String emailText = "Текст для кандидатской работы - черновик";
 
         loginPage.openMailPage(mailOwner.LOGIN,mailOwner.PASSWORD);
-        emailListPage.openFirstEmail();
-        Assert.assertTrue(emailContentPage.isTextCorrect(emailText));
+        emailListPage.openLastEmail();
+        Assert.assertTrue(emailContentPage.isMessageTextCorrect(emailText));
     }
 
-    @Test
-    public void searchEmailTest()  {
-        String senderEmail = "";
-        String senderName = "";
-
-        loginPage.openMailPage(mailOwner.LOGIN,mailOwner.PASSWORD);
-        emailListPage.findByAuthorEmail(senderEmail);
-        Assert.assertTrue(emailContentPage.isAuthorCorrect(senderName, senderEmail));
-
-    }
 }
